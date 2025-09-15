@@ -1,11 +1,12 @@
 package org.example;
 
 import org.junit.Test;
-import static org.testng.AssertJUnit.assertEquals;
 
-import java.io.StringReader;
-import java.io.PushbackReader;
 import java.io.IOException;
+import java.io.PushbackReader;
+import java.io.StringReader;
+
+import static org.testng.AssertJUnit.assertEquals;
 
 public class ScannerTest {
 
@@ -18,7 +19,8 @@ public class ScannerTest {
         assertEquals(TOKEN.VAR, scanner.scan());
         assertEquals(TOKEN.ID, scanner.scan());
 
-        assertEquals("VAR score123 ", scanner.getTokenBufferString());
+        assertEquals("score123", scanner.getTokenBufferString());
+
     }
 
     @Test
