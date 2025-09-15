@@ -16,9 +16,10 @@ public class ScannerTest {
         PushbackReader reader = new PushbackReader(new StringReader(input));
         Scanner scanner = new Scanner(reader);
 
-        assertEquals(TOKEN.VAR, scanner.scan());
-        assertEquals(TOKEN.ID, scanner.scan());
 
+        assertEquals(TOKEN.VAR, scanner.scan());
+        assertEquals("var", scanner.getTokenBufferString());
+        assertEquals(TOKEN.ID, scanner.scan());
         assertEquals("score123", scanner.getTokenBufferString());
 
     }
@@ -31,11 +32,16 @@ public class ScannerTest {
 
 
         assertEquals(TOKEN.INIT, scanner.scan());
-        assertEquals(TOKEN.ID, scanner.scan());
-        assertEquals(TOKEN.EQUALS, scanner.scan());
-        assertEquals(TOKEN.INTLITERAL, scanner.scan());
+        assertEquals("init", scanner.getTokenBufferString());
 
-        assertEquals("INIT score EQUALS 600 ", scanner.getTokenBufferString());
+        assertEquals(TOKEN.ID, scanner.scan());
+        assertEquals("score", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.EQUALS, scanner.scan());
+        assertEquals("=", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.INTLITERAL, scanner.scan());
+        assertEquals("600", scanner.getTokenBufferString());
     }
 
     @Test
@@ -46,13 +52,22 @@ public class ScannerTest {
 
 
         assertEquals(TOKEN.CALCULATE, scanner.scan());
-        assertEquals(TOKEN.ID, scanner.scan());
-        assertEquals(TOKEN.EQUALS, scanner.scan());
-        assertEquals(TOKEN.ID, scanner.scan());
-        assertEquals(TOKEN.PLUS, scanner.scan());
-        assertEquals(TOKEN.ID, scanner.scan());
+        assertEquals("calculate", scanner.getTokenBufferString());
 
-        assertEquals("CALCULATE newsalary EQUALS originalsalary PLUS raise ", scanner.getTokenBufferString());
+        assertEquals(TOKEN.ID, scanner.scan());
+        assertEquals("newsalary", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.EQUALS, scanner.scan());
+        assertEquals("=", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.ID, scanner.scan());
+        assertEquals("originalsalary", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.PLUS, scanner.scan());
+        assertEquals("+", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.ID, scanner.scan());
+        assertEquals("raise", scanner.getTokenBufferString());
     }
 
     @Test
@@ -61,10 +76,12 @@ public class ScannerTest {
         PushbackReader reader = new PushbackReader(new StringReader(input));
         Scanner scanner = new Scanner(reader);
 
-        assertEquals(TOKEN.WRITE, scanner.scan());
-        assertEquals(TOKEN.ID, scanner.scan());
 
-        assertEquals("WRITE salary ", scanner.getTokenBufferString());
+        assertEquals(TOKEN.WRITE, scanner.scan());
+        assertEquals("write", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.ID, scanner.scan());
+        assertEquals("salary", scanner.getTokenBufferString());
     }
 
     @Test
@@ -73,14 +90,24 @@ public class ScannerTest {
         PushbackReader reader = new PushbackReader(new StringReader(input));
         Scanner scanner = new Scanner(reader);
 
-        assertEquals(TOKEN.IF, scanner.scan());
-        assertEquals(TOKEN.ID, scanner.scan());
-        assertEquals(TOKEN.EQUALS, scanner.scan());
-        assertEquals(TOKEN.ID, scanner.scan());
-        assertEquals(TOKEN.THEN, scanner.scan());
-        assertEquals(TOKEN.ENDIF, scanner.scan());
 
-        assertEquals("IF x EQUALS y THEN ENDIF ", scanner.getTokenBufferString());
+        assertEquals(TOKEN.IF, scanner.scan());
+        assertEquals("if", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.ID, scanner.scan());
+        assertEquals("x", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.EQUALS, scanner.scan());
+        assertEquals("=", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.ID, scanner.scan());
+        assertEquals("y", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.THEN, scanner.scan());
+        assertEquals("then", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.ENDIF, scanner.scan());
+        assertEquals("endif", scanner.getTokenBufferString());
     }
 
     @Test
@@ -89,16 +116,31 @@ public class ScannerTest {
         PushbackReader reader = new PushbackReader(new StringReader(input));
         Scanner scanner = new Scanner(reader);
 
-        assertEquals(TOKEN.IF, scanner.scan());
-        assertEquals(TOKEN.ID, scanner.scan());
-        assertEquals(TOKEN.EQUALS, scanner.scan());
-        assertEquals(TOKEN.ID, scanner.scan());
-        assertEquals(TOKEN.THEN, scanner.scan());
-        assertEquals(TOKEN.WRITE, scanner.scan());
-        assertEquals(TOKEN.ID, scanner.scan());
-        assertEquals(TOKEN.ENDIF, scanner.scan());
 
-        assertEquals("IF x EQUALS y THEN WRITE x ENDIF ", scanner.getTokenBufferString());
+        assertEquals(TOKEN.IF, scanner.scan());
+        assertEquals("if", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.ID, scanner.scan());
+        assertEquals("x", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.EQUALS, scanner.scan());
+        assertEquals("=", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.ID, scanner.scan());
+        assertEquals("y", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.THEN, scanner.scan());
+        assertEquals("then", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.WRITE, scanner.scan());
+        assertEquals("write", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.ID, scanner.scan());
+        assertEquals("x", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.ENDIF, scanner.scan());
+        assertEquals("endif", scanner.getTokenBufferString());
+
     }
 
     @Test
@@ -108,19 +150,41 @@ public class ScannerTest {
         Scanner scanner = new Scanner(reader);
 
         assertEquals(TOKEN.WHILE, scanner.scan());
-        assertEquals(TOKEN.ID, scanner.scan());
-        assertEquals(TOKEN.NOTEQUALS, scanner.scan());
-        assertEquals(TOKEN.ID, scanner.scan());
-        assertEquals(TOKEN.DO, scanner.scan());
-        assertEquals(TOKEN.CALCULATE, scanner.scan());
-        assertEquals(TOKEN.ID, scanner.scan());
-        assertEquals(TOKEN.EQUALS, scanner.scan());
-        assertEquals(TOKEN.ID, scanner.scan());
-        assertEquals(TOKEN.PLUS, scanner.scan());
-        assertEquals(TOKEN.INTLITERAL, scanner.scan());
-        assertEquals(TOKEN.ENDWHILE, scanner.scan());
+        assertEquals("while", scanner.getTokenBufferString());
 
-        assertEquals("WHILE x NOTEQUALS y DO CALCULATE x EQUALS x PLUS 1 ENDWHILE ", scanner.getTokenBufferString());
+        assertEquals(TOKEN.ID, scanner.scan());
+        assertEquals("x", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.NOTEQUALS, scanner.scan());
+        assertEquals("!=", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.ID, scanner.scan());
+        assertEquals("y", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.DO, scanner.scan());
+        assertEquals("do", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.CALCULATE, scanner.scan());
+        assertEquals("calculate", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.ID, scanner.scan());
+        assertEquals("x", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.EQUALS, scanner.scan());
+        assertEquals("=", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.ID, scanner.scan());
+        assertEquals("x", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.PLUS, scanner.scan());
+        assertEquals("+", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.INTLITERAL, scanner.scan());
+        assertEquals("1", scanner.getTokenBufferString());
+
+        assertEquals(TOKEN.ENDWHILE, scanner.scan());
+        assertEquals("endwhile", scanner.getTokenBufferString());
+
     }
 
     @Test

@@ -2,6 +2,8 @@ package org.example;
 
 import java.io.IOException;
 import java.io.PushbackReader;
+import java.util.ArrayList;
+import java.util.List;
 
 // token types
 enum TOKEN {
@@ -76,22 +78,22 @@ public class Scanner {
             //operator
             TokenString.setLength(0); // clear the buffer
             TokenString.append((char) c);
-            switch (c) {
-                case '+':
+            switch (TokenString.toString()) {
+                case "+":
                     return TOKEN.PLUS;
-                case '-':
+                case "-":
                     return TOKEN.MINUS;
-                case '&':
+                case "&":
                     return TOKEN.AND;
-                case '|':
+                case "|":
                     return TOKEN.OR;
-                case '=':
+                case "=":
                     return TOKEN.EQUALS;
-                case '"':
+                case "\"":
                     return StringToken(c);
-                case '(':
+                case "(":
                     return TOKEN.LEFT_BRACKET;
-                case ')':
+                case ")":
                     return TOKEN.RIGHT_BRACKET;
             }
 
@@ -100,6 +102,7 @@ public class Scanner {
             }else if (Character.isLetter(c)) {
                 return charaterToken(c);
             }
+
 
         }
 
@@ -165,6 +168,18 @@ public class Scanner {
      */
     private boolean isWhitespace(int c) {
         return (c == 32) || (c == 9) || (c == 10) || (c == 13);
+    }
+
+    private boolean isOperator(int c){
+
+        char[] operator = new char[]{'+','-'};
+
+        for (char ch : operator){
+            if(ch == c){
+                return true;
+            }
+        }
+        return false;
     }
 
 }
