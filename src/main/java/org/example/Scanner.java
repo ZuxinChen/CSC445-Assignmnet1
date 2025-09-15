@@ -85,6 +85,8 @@ public class Scanner {
                     return TOKEN.AND;
                 case '|':
                     return TOKEN.OR;
+                case '=':
+                    return TOKEN.EQUALS;
                 case '"':
                     return StringToken(c);
                 case '(':
