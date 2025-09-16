@@ -2,35 +2,6 @@ package org.example;
 
 import java.io.IOException;
 import java.io.PushbackReader;
-import java.util.ArrayList;
-import java.util.List;
-
-// token types
-enum TOKEN {
-    VAR,
-    WRITE,
-    INIT,
-    IF,
-    THEN,
-    ENDIF,
-    WHILE,
-    DO,
-    ENDWHILE,
-    CALCULATE,
-    PLUS,
-    EQUALS,
-    NOTEQUALS,
-    SCANEOF,
-    ID,
-    INTLITERAL,
-    STRING,
-    MINUS,
-    AND,
-    OR,
-    LEFT_BRACKET,
-    RIGHT_BRACKET
-
-}
 
 public class Scanner {
 
@@ -75,32 +46,12 @@ public class Scanner {
                 continue;
             }
 
-            //operator
-            TokenString.setLength(0); // clear the buffer
-            TokenString.append((char) c);
-            switch (TokenString.toString()) {
-                case "+":
-                    return TOKEN.PLUS;
-                case "-":
-                    return TOKEN.MINUS;
-                case "&":
-                    return TOKEN.AND;
-                case "|":
-                    return TOKEN.OR;
-                case "=":
-                    return TOKEN.EQUALS;
-                case "\"":
-                    return StringToken(c);
-                case "(":
-                    return TOKEN.LEFT_BRACKET;
-                case ")":
-                    return TOKEN.RIGHT_BRACKET;
-            }
-
             if (Character.isDigit(c)) {
                 return digitToken(c);
             }else if (Character.isLetter(c)) {
                 return charaterToken(c);
+            }else{
+                return operatorToken(c);
             }
 
 
@@ -112,6 +63,40 @@ public class Scanner {
 
     public String getTokenBufferString(){
         return TokenString.toString();
+    }
+
+    private TOKEN operatorToken(int c){
+        //operator
+        TokenString.setLength(0); // clear the buffer
+        TokenString.append((char) c);
+        switch (c) {
+            case '+':
+                return TOKEN.PLUS;
+            case '-':
+                return TOKEN.MINUS;
+            case '&':
+                return TOKEN.AND;
+            case '|':
+                return TOKEN.OR;
+            case '=':
+                return TOKEN.EQUALS;
+            case '"':
+                return StringToken(c);
+            case '(':
+                return TOKEN.LEFT_BRACKET;
+            case ')':
+                return TOKEN.RIGHT_BRACKET;
+            case '!':
+                c = readNextChar();
+                TokenString.append((char) c);
+                if(c == '=')
+                    return TOKEN.NOTEQUALS;
+                else
+                    unreadChar(c);
+                break;
+        }
+
+        return TOKEN.UNDEFIND;
     }
 
 
@@ -170,16 +155,5 @@ public class Scanner {
         return (c == 32) || (c == 9) || (c == 10) || (c == 13);
     }
 
-    private boolean isOperator(int c){
-
-        char[] operator = new char[]{'+','-'};
-
-        for (char ch : operator){
-            if(ch == c){
-                return true;
-            }
-        }
-        return false;
-    }
 
 }
